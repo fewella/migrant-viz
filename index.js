@@ -126,6 +126,12 @@ svg.call(tip)
 var world_data = undefined;
 var world_geo  = undefined;
 
+var country_centers = {};
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 queue()
   .defer(d3.json, 'world_countries.json')
   .defer(d3.tsv, 'world_population.tsv')
@@ -146,6 +152,25 @@ queue()
   })
   geography.features.forEach(d => {
     d[colorVariable] = colorVariableValueByID[d.id]
+
+    var center_x = 0;
+    var center_y = 0;
+    var count    = 0;
+    d.geometry.coordinates.forEach(c => {
+        c.forEach(t => {
+            if (d.id == "USA") {
+                console.log(center_x + " " + center_y);
+            }
+            if (isNumeric(t[0]) && isNumeric(t[1])) {
+                center_x += t[0];
+                center_y += t[1];
+                count++;
+            }
+        });
+    });
+    center_x /= count;
+    center_y /= count;
+    country_centers[d.id] = [center_x, center_y];
   })
 
   // calculate ckmeans clusters
@@ -210,13 +235,7 @@ queue()
 }
 
 
-var country_centers = {}
-function find_centers() {
-    
-}
-
-
-function drawArrow() {
+function drawArrow(src, dst) {
     var markerBoxWidth = 20;
     var markerBoxHeight = 20;
 
@@ -241,13 +260,13 @@ function drawArrow() {
 
   svg
     .append('path')
-    .attr('d', d3.line()([[100, 60], [300, 150]]))
+    .attr('d', d3.line()([country_centers[src], country_centers[dst]]))
     .attr('stroke', 'black')
     .attr('marker-start', 'url(#arrow)')
     .attr('fill', 'none');
 
 
 }
-
+//.attr('d', d3.line()([[100, 60], [300, 150]]))
 //drawArrow();
 
