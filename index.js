@@ -1,4 +1,3 @@
-let flightPath;
 let threshold = 5000;
 let centers   = {};
 let paths     = {};
@@ -7,7 +6,7 @@ let map;
 let lost = ["Bonaire, Sint Eustatius and Saba", "Cura\u00e7ao", "Sint Maarten (Dutch part)", "Channel Islands", "Wallis and Futuna Islands", "Holy See"]
 
 
-function initMap() {
+async function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
       zoom: 3,
       center: { lat: 0, lng: -180 },
@@ -20,10 +19,11 @@ function initMap() {
         console.log("paths[" + year + "] set to {}" );
         
         for (const src in data[year]) {
+            if (lost.includes(src)) continue;
             paths[year][src] = {}
             
             for (const dst in data[year][src]) {
-                if (lost.includes(dst) || lost.includes(src)) continue;
+                if (lost.includes(dst)) continue;
                 console.log("setting src -> dst: " + src + " -> " + dst);
                 paths[year][src][dst] = new google.maps.Polyline({
                     path: [
@@ -41,16 +41,10 @@ function initMap() {
     }
 }
 
-
 function initCenters() {
     countries.forEach((country) => {
         centers[country["name"]] = [country["latitude"], country["longitude"]]
     })
-}
-
-
-function initPaths() {
-    
 }
 
 function drawPath(year, src, dst) {
@@ -63,5 +57,4 @@ function erasePath(year, src, dst) {
 
 
 initCenters();
-initPaths();
 
