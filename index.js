@@ -16,7 +16,6 @@ async function initMap() {
     for (const year in data) {
         console.log(year);
         paths[year] = {}
-        console.log("paths[" + year + "] set to {}" );
         
         for (const src in data[year]) {
             if (lost.includes(src)) continue;
@@ -24,7 +23,6 @@ async function initMap() {
             
             for (const dst in data[year][src]) {
                 if (lost.includes(dst)) continue;
-                console.log("setting src -> dst: " + src + " -> " + dst);
                 paths[year][src][dst] = new google.maps.Polyline({
                     path: [
                         { lat: centers[src][0], lng: centers[src][1] },
@@ -55,6 +53,4 @@ function erasePath(year, src, dst) {
     paths[year][src][dst].setMap(null);
 }
 
-
 initCenters();
-
