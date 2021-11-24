@@ -225,7 +225,7 @@ countries = [
     "country": "CD",
     "latitude": -4.038333,
     "longitude": 21.758664,
-    "name": "Congo [DRC]"
+    "name": "Democratic Republic of the Congo"
   },
   {
     "country": "CF",
@@ -237,7 +237,7 @@ countries = [
     "country": "CG",
     "latitude": -0.228021,
     "longitude": 15.827659,
-    "name": "Congo [Republic]"
+    "name": "Congo"
   },
   {
     "country": "CH",
@@ -297,7 +297,7 @@ countries = [
     "country": "CV",
     "latitude": 16.002082,
     "longitude": -24.013197,
-    "name": "Cape Verde"
+    "name": "Cabo Verde"
   },
   {
     "country": "CX",
@@ -411,7 +411,7 @@ countries = [
     "country": "FK",
     "latitude": -51.796253,
     "longitude": -59.523613,
-    "name": "Falkland Islands [Islas Malvinas]"
+    "name": "Falkland Islands"
   },
   {
     "country": "FM",
@@ -819,7 +819,7 @@ countries = [
     "country": "MD",
     "latitude": 47.411631,
     "longitude": 28.369885,
-    "name": "Moldova"
+    "name": "Republic of Moldova"
   },
   {
     "country": "ME",
@@ -843,7 +843,7 @@ countries = [
     "country": "MK",
     "latitude": 41.608635,
     "longitude": 21.745275,
-    "name": "Macedonia [FYROM]"
+    "name": "North Macedonia"
   },
   {
     "country": "ML",
@@ -855,7 +855,7 @@ countries = [
     "country": "MM",
     "latitude": 21.913965,
     "longitude": 95.956223,
-    "name": "Myanmar [Burma]"
+    "name": "Myanmar"
   },
   {
     "country": "MN",
@@ -1077,7 +1077,7 @@ countries = [
     "country": "PS",
     "latitude": 31.952162,
     "longitude": 35.233154,
-    "name": "Palestinian Territories"
+    "name": "State of Palestine"
   },
   {
     "country": "PT",
@@ -1245,7 +1245,7 @@ countries = [
     "country": "SZ",
     "latitude": -26.522503,
     "longitude": 31.465866,
-    "name": "Swaziland"
+    "name": "Eswatini"
   },
   {
     "country": "TC",
@@ -1341,7 +1341,7 @@ countries = [
     "country": "TZ",
     "latitude": -6.369028,
     "longitude": 34.888822,
-    "name": "Tanzania"
+    "name": "United Republic of Tanzania"
   },
   {
     "country": "UA",
@@ -1365,7 +1365,7 @@ countries = [
     "country": "US",
     "latitude": 37.09024,
     "longitude": -95.712891,
-    "name": "United States"
+    "name": "United States of America"
   },
   {
     "country": "UY",
@@ -1407,7 +1407,7 @@ countries = [
     "country": "VI",
     "latitude": 18.335765,
     "longitude": -64.896335,
-    "name": "U.S. Virgin Islands"
+    "name": "United States Virgin Islands"
   },
   {
     "country": "VN",
