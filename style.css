@@ -1,0 +1,41 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#control-panel {
+    height: 100%;
+    width: 20%;
+    margin-right: auto;
+    margin-left: 0;
+    float: left;
+}
+
+#map {
+    height: 100%;
+    width: 80%;
+    margin-right: 0;
+    margin-left: auto;
+    float: right;
+}
+
+#select-panel {
+    width:100%;
+    text-align: center;
+}
+
+#source-panel {
+    height: 100%;
+    width: 50%;
+    float: left;
+    text-align: center;
+    
+}
+
+#dest-panel {
+    height: 100%;
+    width: 50%;
+    float: right;
+    text-align: center;
+}
