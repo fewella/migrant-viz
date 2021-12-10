@@ -1,4 +1,4 @@
-let threshold = 5000;
+let threshold = 500000;
 let centers   = {};
 let paths     = {};
 let map;
@@ -26,6 +26,11 @@ function initMap() {
 }
 
 function associateCountries() {
+    const lineSymbol = {
+        path: g.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+        scale: 3,
+        strokeWeight: 3
+    };
     for (const year in data) {
         console.log(year);
         paths[year] = {};
@@ -36,16 +41,29 @@ function associateCountries() {
             
             for (const dst in data[year][src]) {
                 if (lost.includes(dst)) continue;
+                
+                let num_migrants = data[year][src][dst];
+                
                 paths[year][src][dst] = new google.maps.Polyline({
                     path: [
-                        { lat: centers[src][0], lng: centers[src][1] },
-                        { lat: centers[dst][0], lng: centers[dst][1] }
+                        { lat: centers[dst][0], lng: centers[dst][1] },
+                        { lat: centers[src][0], lng: centers[src][1] }
+                    ],
+                    icons:[
+                        {
+                            icon: lineSymbol,
+                            offset: "100%"
+                        }
                     ],
                     geodesic: true,
-                    strokeColor: "#FF0000",
+                    strokeColor: "#ba70ff",
                     strokeOpacity: 1.0,
-                    strokeWeight: 2,
+                    strokeWeight: 1,
                 });
+
+                if (num_migrants > threshold) {
+                    paths[year][src][dst].setMap(map);
+                }
             }
         }
     }
