@@ -10,6 +10,7 @@ let g;
 // idea: panel on right: has a dropdown for year, src, and dst
 // draw path for given year, and every src/dst selected
 // main idea: make it easy to analyze countries in particular
+//      issue: that's a lot of boxes...
 // changing years does not change boxes checked, erase everythign and redraw with new year selection
 
 function initMap() {
