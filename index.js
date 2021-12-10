@@ -99,11 +99,38 @@ function erasePath(year, src, dst) {
 }
 
 function addPath() {
-  console.log("clicked");
+  let src = $("#sourceCountry").val();
+  let dst = $("#destCountry").val();
+
+  const lineSymbol = {
+      path: g.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+      scale: 3,
+      strokeWeight: 3
+  };
+
+  let path = new google.maps.Polyline({
+      path: [
+          { lat: centers[dst][0], lng: centers[dst][1] },
+          { lat: centers[src][0], lng: centers[src][1] }
+      ],
+      icons:[
+          {
+              icon: lineSymbol,
+              offset: "100%"
+          }
+      ],
+      geodesic: true,
+      strokeColor: "#081da3",
+      strokeOpacity: 1.0,
+      strokeWeight: 1,
+  });
+
+  path.setMap(map);
+
 }
 
 $( function() {
-  var countryList = [];
+  let countryList = [];
 
   countries.forEach((country) => {
       countryList.push(country["name"]);
