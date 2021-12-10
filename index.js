@@ -84,7 +84,7 @@ function drawThresholdPaths(draw) {
                 if (draw) {
                     drawPath(currYear, src, dst);
                 } else {
-                    erasePath(currYear, src, dst)
+                    erasePath(currYear, src, dst);
                 }
         }
     }
