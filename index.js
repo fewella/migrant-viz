@@ -17,7 +17,7 @@ function initMap() {
 
     initCenters();
     associateCountries();
-    drawThresholdPaths();
+    drawThresholdPaths(true);
 }
 
 function associateCountries() {
