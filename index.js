@@ -1,17 +1,11 @@
 let threshold = 500000;
+let currYear  = 2019;
 let centers   = {};
 let paths     = {};
 let map;
 
 let lost = ["Bonaire, Sint Eustatius and Saba", "Cura\u00e7ao", "Sint Maarten (Dutch part)", "Channel Islands", "Wallis and Futuna Islands", "Holy See"]
-
 let g;
-
-// idea: panel on right: has a dropdown for year, src, and dst
-// draw path for given year, and every src/dst selected
-// main idea: make it easy to analyze countries in particular
-//      issue: that's a lot of boxes...
-// changing years does not change boxes checked, erase everythign and redraw with new year selection
 
 function initMap() {
     g   = google;
@@ -23,6 +17,7 @@ function initMap() {
 
     initCenters();
     associateCountries();
+    drawThresholdPaths();
 }
 
 function associateCountries() {
@@ -60,19 +55,39 @@ function associateCountries() {
                     strokeOpacity: 1.0,
                     strokeWeight: 1,
                 });
-
-                if (num_migrants > threshold) {
-                    paths[year][src][dst].setMap(map);
-                }
             }
         }
     }
 }
 
+
 function initCenters() {
     countries.forEach((country) => {
         centers[country["name"]] = [country["latitude"], country["longitude"]];
     })
+}
+
+
+function onChangeYear() {
+    drawThresholdPaths(false);
+    currYear = $('#dropdown').val();
+    drawThresholdPaths(true);
+}
+
+
+function drawThresholdPaths(draw) {
+    for (const src in data[currYear]) {
+        if (lost.includes(src)) continue;
+        for (const dst in data[currYear][src]) {
+            if (lost.includes(dst)) continue;
+            if (data[currYear][src][dst] > threshold)
+                if (draw) {
+                    drawPath(currYear, src, dst);
+                } else {
+                    erasePath(currYear, src, dst)
+                }
+        }
+    }
 }
 
 function drawPath(year, src, dst) {
@@ -82,5 +97,3 @@ function drawPath(year, src, dst) {
 function erasePath(year, src, dst) {
     paths[year][src][dst].setMap(null);
 }
-
-
