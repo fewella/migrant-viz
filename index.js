@@ -29,16 +29,16 @@ function associateCountries() {
     for (const year in data) {
         console.log(year);
         paths[year] = {};
-        
+
         for (const src in data[year]) {
             if (lost.includes(src)) continue;
             paths[year][src] = {};
-            
+
             for (const dst in data[year][src]) {
                 if (lost.includes(dst)) continue;
-                
+
                 let num_migrants = data[year][src][dst];
-                
+
                 paths[year][src][dst] = new google.maps.Polyline({
                     path: [
                         { lat: centers[dst][0], lng: centers[dst][1] },
@@ -97,3 +97,26 @@ function drawPath(year, src, dst) {
 function erasePath(year, src, dst) {
     paths[year][src][dst].setMap(null);
 }
+<<<<<<< HEAD
+=======
+
+function addPath() {
+  console.log("clicked");
+}
+
+$( function() {
+  var countryList = [];
+
+  countries.forEach((country) => {
+      countryList.push(country["name"]);
+  });
+
+  $( "#sourceCountry" ).autocomplete({
+    source: countryList
+  });
+
+  $( "#destCountry" ).autocomplete({
+    source: countryList
+  });
+} );
+>>>>>>> 56c74d7be5ca60f2ddc3c99b720158b073d6f3d3
