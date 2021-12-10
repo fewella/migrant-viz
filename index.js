@@ -97,8 +97,6 @@ function drawPath(year, src, dst) {
 function erasePath(year, src, dst) {
     paths[year][src][dst].setMap(null);
 }
-<<<<<<< HEAD
-=======
 
 function addPath() {
   console.log("clicked");
@@ -119,4 +117,3 @@ $( function() {
     source: countryList
   });
 } );
->>>>>>> 56c74d7be5ca60f2ddc3c99b720158b073d6f3d3
