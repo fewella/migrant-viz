@@ -13,10 +13,10 @@
 
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly"
-      async
+      async="false"
     ></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./jquery-ui/jquery-ui.css">
     <link rel="stylesheet" href="./style.css">
@@ -37,6 +37,11 @@
         </select>
       </div>
 
+      <div>
+        <label for="threshold-slider" class="form-label" id="threshold-label">Select threshold: 100,000</label>
+        <input type="range" class="form-range" id="threshold-slider" min="0" max="6" step="1" value="3">
+      </div>
+
       <div class="ui-widget">
         <label for="sourceCountry">Source: </label>
         <input id="sourceCountry">
@@ -47,37 +52,10 @@
         <button class="btn btn-primary" type="submit" onclick="addPath()">Add</button>
       </div>
 
+      <div id="selection-text">
 
-
-      <!-- <div id = "source-panel">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            checkbox
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-          <label class="form-check-label" for="flexCheckChecked">
-            checkbox
-          </label>
-        </div>
       </div>
 
-      <div id = "dest-panel">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-             checkbox
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-          <label class="form-check-label" for="flexCheckChecked">
-             checkbox
-          </label>
-        </div>
-      </div> -->
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
 

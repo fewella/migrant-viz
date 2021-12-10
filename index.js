@@ -1,4 +1,4 @@
-let threshold = 500000;
+let threshold = 100000;
 let currYear  = 2019;
 let centers   = {};
 let paths     = {};
@@ -72,6 +72,8 @@ function onChangeYear() {
     drawThresholdPaths(false);
     currYear = $('#dropdown').val();
     drawThresholdPaths(true);
+
+    $( "#selection-text" ).empty();
 }
 
 
@@ -80,12 +82,14 @@ function drawThresholdPaths(draw) {
         if (lost.includes(src)) continue;
         for (const dst in data[currYear][src]) {
             if (lost.includes(dst)) continue;
-            if (data[currYear][src][dst] > threshold)
-                if (draw) {
-                    drawPath(currYear, src, dst);
-                } else {
-                    erasePath(currYear, src, dst);
-                }
+            if (draw) {
+              if (data[currYear][src][dst] > threshold) {
+                drawPath(currYear, src, dst);
+              }
+            } else {
+              erasePath(currYear, src, dst);
+            }
+
         }
     }
 }
@@ -108,10 +112,12 @@ function addPath() {
       strokeWeight: 3
   };
 
-  let path = new google.maps.Polyline({
+  currYear = $('#dropdown').val();
+
+  paths[currYear][src][dst] = new google.maps.Polyline({
       path: [
-          { lat: centers[dst][0], lng: centers[dst][1] },
-          { lat: centers[src][0], lng: centers[src][1] }
+          { lat: centers[src][0], lng: centers[src][1] },
+          { lat: centers[dst][0], lng: centers[dst][1] }
       ],
       icons:[
           {
@@ -125,10 +131,19 @@ function addPath() {
       strokeWeight: 1,
   });
 
-  path.setMap(map);
+  paths[currYear][src][dst].setMap(map);
+
+  let result = true;
+
+  addText(src, dst, result);
 
 }
 
+function addText(src, dst, result) {
+  $( "#selection-text" ).append( "<p>" + src + " --> " + dst + (result ? ": added!" : ": no data") + "</p>" );
+}
+
+// Adds countries for the autocomplete textboxes
 $( function() {
   let countryList = [];
 
@@ -144,3 +159,57 @@ $( function() {
     source: countryList
   });
 } );
+
+$(document).on('input change', '#threshold-slider', function() {
+  let val = $(this).val();
+
+  switch(val) {
+    case "0":
+      threshold = 5000;
+      $("#threshold-label").text("Select threshold: " + "5,000");
+      break;
+
+    case "1":
+      threshold = 10000;
+      $("#threshold-label").text("Select threshold: " + "10,000");
+      break;
+
+    case "2":
+      threshold = 50000;
+      $("#threshold-label").text("Select threshold: " + "50,000");
+      break;
+
+    case "3":
+      threshold = 100000;
+      $("#threshold-label").text("Select threshold: " + "100,000");
+      break;
+
+    case "4":
+      threshold = 200000;
+      $("#threshold-label").text("Select threshold: " + "200,000");
+      break;
+
+    case "5":
+      threshold = 500000;
+      $("#threshold-label").text("Select threshold: " + "500,000");
+      break;
+
+    case "6":
+      threshold = 1000000;
+      $("#threshold-label").text("Select threshold: " + "1,000,000");
+      break;
+
+    default:
+      threshold = 100000;
+      $("#threshold-label").text("Select threshold: " + "100,000");
+      break;
+
+  }
+
+  console.log(threshold);
+
+  drawThresholdPaths(false);
+  drawThresholdPaths(true);
+
+
+});
