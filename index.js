@@ -3,6 +3,7 @@ let currYear  = 2019;
 let centers   = {};
 let paths     = {};
 let addedPaths = {};
+let noDataPaths = {};
 let map;
 
 let lost = ["Bonaire, Sint Eustatius and Saba", "Cura\u00e7ao", "Sint Maarten (Dutch part)", "Channel Islands", "Wallis and Futuna Islands", "Holy See"]
@@ -83,8 +84,6 @@ function associateCountries() {
 function calcStrokeWeight(numMigrants) {
   if (numMigrants > 10000) {
 
-    // let val = parseInt(0.07567516 * Math.pow(numMigrants, 0.325604));
-
     let val = parseInt(0.04512877 * Math.pow(numMigrants, 0.3428371));
 
     if (val > 1) {
@@ -112,6 +111,7 @@ function onChangeYear() {
 
     $( "#selection-text" ).empty();
     addedPaths = {};
+    noDataPaths = {};
 }
 
 
@@ -122,9 +122,6 @@ function drawThresholdPaths(draw) {
             if (lost.includes(dst)) continue;
             if (draw) {
               if (data[currYear][src][dst] > threshold) {
-                console.log(threshold);
-                console.log(currYear + ", " + src + ", " + dst);
-                console.log(data[currYear][src][dst]);
                 drawPath(currYear, src, dst);
               }
             } else {
@@ -159,15 +156,27 @@ function addPath() {
   let weight = calcStrokeWeight(numMigrants);
 
   if (numMigrants === undefined) {
-    addText(src, dst, false);
+    if (!checkNested(noDataPaths, currYear, src, dst)) {
+      addText(src, dst, false);
+
+      if (noDataPaths[currYear] === undefined) {
+        noDataPaths[currYear] = {};
+      }
+
+      if (noDataPaths[currYear][src] === undefined) {
+        noDataPaths[currYear][src] = {};
+      }
+
+      noDataPaths[currYear][src][dst] = true;
+    }
 
   } else {
     if (!checkNested(addedPaths, currYear, src, dst)) {
 
       let line = new google.maps.Polyline({
           path: [
-              { lat: centers[src][0], lng: centers[src][1] },
-              { lat: centers[dst][0], lng: centers[dst][1] }
+              { lat: centers[dst][0], lng: centers[dst][1] },
+              { lat: centers[src][0], lng: centers[src][1] }
           ],
           icons:[
               {
@@ -183,7 +192,7 @@ function addPath() {
 
       let infoWindow = new google.maps.InfoWindow();
 
-      //Open the InfoWindow on mouseover:
+      // Open the InfoWindow on mouseover:
       google.maps.event.addListener(line, 'mouseover', function(e) {
          infoWindow.setPosition(e.latLng);
          infoWindow.setContent("Number of migrants from " + dst + " to " + src + ": " + numMigrants);
@@ -293,4 +302,5 @@ $(document).on('input change', '#threshold-slider', function() {
 
   $( "#selection-text" ).empty();
   addedPaths = {};
+  noDataPaths = {};
 });
