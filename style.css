@@ -76,7 +76,6 @@ html, body {
 
 /* For the threshold tooltip */
 .help-tip {
-    /* position: absolute; */
     float: right;
     top: 18px;
     right: 18px;
