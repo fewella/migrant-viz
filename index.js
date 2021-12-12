@@ -12,7 +12,7 @@ function initMap() {
     g   = google;
     map = new google.maps.Map(document.getElementById("map"), {
       zoom: 3,
-      center: { lat: 0, lng: -180 },
+      center: { lat: 39, lng: 8 },  // Portugal
       mapTypeId: "terrain",
     });
 
