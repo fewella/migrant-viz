@@ -10,6 +10,7 @@ html, body {
     margin-right: auto;
     margin-left: 0;
     float: left;
+    padding: 25px;
 }
 
 #map {
@@ -22,10 +23,16 @@ html, body {
 
 #select-panel {
     width:100%;
-    text-align: center;
+    text-align: left;
+    margin-top: 40px;
+    margin-bottom: 25px;
 }
 
-#source-panel {
+#threshold-panel {
+    margin-bottom: 20px;
+}
+
+/* #source-panel {
     height: 100%;
     width: 50%;
     float: left;
@@ -38,6 +45,18 @@ html, body {
     width: 50%;
     float: right;
     text-align: center;
+} */
+
+#source-country {
+  margin-bottom: 15px;
+}
+
+#dest-country {
+  margin-bottom: 15px;
+}
+
+#selection-text {
+  margin-top: 20px;
 }
 
 #loader {

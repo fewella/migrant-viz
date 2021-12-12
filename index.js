@@ -41,7 +41,7 @@ function associateCountries() {
                 let numMigrants = data[year][src][dst];
                 let weight = calcStrokeWeight(numMigrants);
 
-                paths[year][src][dst] = new google.maps.Polyline({
+                let line = new google.maps.Polyline({
                     path: [
                         { lat: centers[dst][0], lng: centers[dst][1] },
                         { lat: centers[src][0], lng: centers[src][1] }
@@ -57,6 +57,22 @@ function associateCountries() {
                     strokeOpacity: 1.0,
                     strokeWeight: weight,
                 });
+
+                let infoWindow = new google.maps.InfoWindow();
+
+                //Open the InfoWindow on mouseover:
+                google.maps.event.addListener(line, 'mouseover', function(e) {
+                   infoWindow.setPosition(e.latLng);
+                   infoWindow.setContent("Number of migrants from " + dst + " to " + src + ": " + numMigrants);
+                   infoWindow.open(map);
+                });
+
+                // Close the InfoWindow on mouseout:
+                google.maps.event.addListener(line, 'mouseout', function() {
+                   infoWindow.close();
+                });
+
+                paths[year][src][dst] = line;
             }
         }
     }
@@ -66,11 +82,10 @@ function associateCountries() {
 
 function calcStrokeWeight(numMigrants) {
   if (numMigrants > 10000) {
-    // return (49 * numMigrants / 990000) + (50 / 99);
 
-    // let val = parseInt(0.06716668 * Math.pow(numMigrants, 0.3797484));
-    // let val = parseInt(0.0000000000273361 * Math.pow(numMigrants, 2));
-    let val = parseInt( 0.01889005 * Math.pow(numMigrants, 0.4556229));
+    // let val = parseInt(0.07567516 * Math.pow(numMigrants, 0.325604));
+
+    let val = parseInt(0.04512877 * Math.pow(numMigrants, 0.3428371));
 
     if (val > 1) {
       return val;
@@ -107,6 +122,9 @@ function drawThresholdPaths(draw) {
             if (lost.includes(dst)) continue;
             if (draw) {
               if (data[currYear][src][dst] > threshold) {
+                console.log(threshold);
+                console.log(currYear + ", " + src + ", " + dst);
+                console.log(data[currYear][src][dst]);
                 drawPath(currYear, src, dst);
               }
             } else {
@@ -126,8 +144,8 @@ function erasePath(year, src, dst) {
 }
 
 function addPath() {
-  let src = $("#sourceCountry").val();
-  let dst = $("#destCountry").val();
+  let src = $("#source-country").val();
+  let dst = $("#dest-country").val();
 
   const lineSymbol = {
       path: g.maps.SymbolPath.FORWARD_CLOSED_ARROW,
@@ -199,11 +217,11 @@ $( function() {
       countryList.push(country["name"]);
   });
 
-  $( "#sourceCountry" ).autocomplete({
+  $( "#source-country" ).autocomplete({
     source: countryList
   });
 
-  $( "#destCountry" ).autocomplete({
+  $( "#dest-country" ).autocomplete({
     source: countryList
   });
 } );
@@ -259,6 +277,4 @@ $(document).on('input change', '#threshold-slider', function() {
 
   $( "#selection-text" ).empty();
   addedPaths = {};
-
-
 });
