@@ -225,7 +225,7 @@ function addPath() {
 }
 
 function addText(src, dst, result) {
-  $( "#selection-text" ).append( "<p>" + src + " --> " + dst + (result ? ": added!" : ": no data") + "</p>" );
+  $( "#selection-text" ).append( "<p>" + dst + " --> " + src + (result ? ": added!" : ": no data") + "</p>" );
 }
 
 function checkNested(obj, level,  ...rest) {
