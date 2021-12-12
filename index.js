@@ -144,8 +144,8 @@ function erasePath(year, src, dst) {
 }
 
 function addPath() {
-  let src = $("#source-country").val();
-  let dst = $("#dest-country").val();
+  let dst = $("#source-country").val();
+  let src = $("#dest-country").val();
 
   const lineSymbol = {
       path: g.maps.SymbolPath.FORWARD_CLOSED_ARROW,
@@ -164,7 +164,7 @@ function addPath() {
   } else {
     if (!checkNested(addedPaths, currYear, src, dst)) {
 
-      paths[currYear][src][dst] = new google.maps.Polyline({
+      let line = new google.maps.Polyline({
           path: [
               { lat: centers[src][0], lng: centers[src][1] },
               { lat: centers[dst][0], lng: centers[dst][1] }
@@ -180,6 +180,22 @@ function addPath() {
           strokeOpacity: 1.0,
           strokeWeight: weight,
       });
+
+      let infoWindow = new google.maps.InfoWindow();
+
+      //Open the InfoWindow on mouseover:
+      google.maps.event.addListener(line, 'mouseover', function(e) {
+         infoWindow.setPosition(e.latLng);
+         infoWindow.setContent("Number of migrants from " + dst + " to " + src + ": " + numMigrants);
+         infoWindow.open(map);
+      });
+
+      // Close the InfoWindow on mouseout:
+      google.maps.event.addListener(line, 'mouseout', function() {
+         infoWindow.close();
+      });
+
+      paths[currYear][src][dst] = line;
 
       paths[currYear][src][dst].setMap(map);
 
